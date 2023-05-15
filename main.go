@@ -1,52 +1,47 @@
 package main
 
 import (
-	"github.com/jung-kurt/gofpdf"
+	"fmt"
+
+	"github.com/go-pdf/fpdf"
 )
 
 func main() {
-	err := GeneratePdf("contract.pdf")
-	if err != nil {
-		panic(err)
-	}
-}
+	pdf := fpdf.New("P", "mm", "A4", "")
 
-func GeneratePdf(filename string) error {
-
-	pdf := gofpdf.New("P", "mm", "A4", "")
-	pdf.AddPage()
-
+	pdf.SetTopMargin(30)
 	pdf.SetHeaderFuncMode(func() {
-		//pdf.Image("avatar.png", 10, 6, 30, 0, false, "", 0, "")
+		pdf.Image("avatar.png", 10, 5, 18, 0, false, "", 0, "")
 		pdf.SetY(5)
-		pdf.SetFont("Arial", "B", 15)
-		pdf.Cell(80, 0, "")
-		pdf.CellFormat(30, 10, "ASDSDASDASDASDASDASDAS", "1", 0, "C", false, 0, "")
-		pdf.Ln(20)
+		pdf.SetFont("Arial", "B", 25)
+		pdf.Cell(25, 0, "")
+		pdf.CellFormat(160, 20, "CONTRATO DE VENDA", "1", 1, "C", false, 0, "")
 	}, true)
 
 	pdf.SetFooterFunc(func() {
 		pdf.SetY(-15)
 		pdf.SetFont("Arial", "I", 8)
-		pdf.CellFormat(0, 10, "Zap veiculos multimarcas",
-			"", 0, "C", false, 0, "")
+		pdf.CellFormat(0, 10, fmt.Sprintf("Page %d/{nb}", pdf.PageNo()), "", 0, "C", false, 0, "")
 	})
 
-	return pdf.OutputFileAndClose(filename)
+	pdf.AliasNbPages("")
+	pdf.AddPage()
+
+	pdf.SetFont("Arial", "B", 14)
+	pdf.Cell(70, 10, "")
+	pdf.CellFormat(50, 10, "EMPRESA", "2", 1, "C", false, 0, "")
+	pdf.Ln(10)
+
+	pdf.SetFont("Arial", "I", 12)
+	pdf.Cell(5, 10, "")
+	pdf.CellFormat(5, 10, "Razão Social:                                       CNPJ:", "", 1, "L", false, 0, "")
+	pdf.Cell(5, 10, "")
+	pdf.CellFormat(5, 10, "ENDEREÇO:                                       BAIRRO:                          CEP:", "", 1, "L", false, 0, "")
+	pdf.CellFormat(5, 10, "Razão Social:                                       CNPJ:", "", 1, "L", false, 0, "")
+	pdf.Ln(50)
+
+	err := pdf.OutputFileAndClose("contract.pdf")
+	if err != nil {
+		fmt.Print("Output file error:", err)
+	}
 }
-
-//pdf.SetFont("Arial", "B", 20)
-
-// CellFormat(width, height, text, border, position after, align, fill, link, linkStr)
-//pdf.CellFormat(200, 7, "Contrato de Venda", "0", 0, "CM", false, 0, "")
-
-// ImageOptions(src, x, y, width, height, flow, options, link, linkStr)
-// pdf.ImageOptions(
-// 	"ZAP_VEICULOS.png",
-// 	70, 20,
-// 	25, 15,
-// 	false,
-// 	gofpdf.ImageOptions{ImageType: "png", ReadDpi: true},
-// 	0,
-// 	"",
-// )
