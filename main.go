@@ -33,12 +33,12 @@ func main() {
 	pdf.Ln(10)
 
 	pdf.SetFont("Arial", "I", 12)
-	pdf.Cell(5, 10, "")
-	pdf.CellFormat(5, 10, "Razão Social:                                       CNPJ:", "", 1, "L", false, 0, "")
-	pdf.Cell(5, 10, "")
-	pdf.CellFormat(5, 10, "ENDEREÇO:                                       BAIRRO:                          CEP:", "", 1, "L", false, 0, "")
-	pdf.CellFormat(5, 10, "Razão Social:                                       CNPJ:", "", 1, "L", false, 0, "")
-	pdf.Ln(50)
+	pdf.Cell(1, 10, "")
+	pdf.CellFormat(0, 10, "Razao Social:Minha Loja CNPJ:98.654.987/0001-01", "", 1, "L", false, 0, "")
+	pdf.Cell(1, 10, "")
+	pdf.CellFormat(0, 10, "ENDEREÇO: AV Meio da Rua BAIRRO: Mangabeira CEP:58059434", "", 1, "L", false, 0, "")
+	pdf.Cell(1, 10, "")
+	pdf.CellFormat(0, 10, "CIDADE: Joao Pessoa- PB TELEFONE:(83) 89988998 VENDEDOR: Fulano", "", 1, "L", false, 0, "")
 
 	err := pdf.OutputFileAndClose("contract.pdf")
 	if err != nil {
